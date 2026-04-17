@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type Transaction struct {
 	gorm.Model
-	Ammount    int64
-	Fee        int64
+	Ammount    uint64
+	Fee        float32
 	UserID     uint
 	MerchantID uint
 }

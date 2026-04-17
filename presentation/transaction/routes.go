@@ -2,6 +2,6 @@ package transaction
 
 import "github.com/gin-gonic/gin"
 
-func CommerceRoutes(commerce *gin.RouterGroup) {
-	commerce.POST("/", createTransaction)
+func TransactionRoutes(transaction *gin.RouterGroup) {
+	transaction.POST("/", createTransaction)
 }
