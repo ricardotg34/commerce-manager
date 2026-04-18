@@ -2,6 +2,7 @@ package merchant
 
 import (
 	"commerce-manager/domain/dtos"
+	"log/slog"
 	"net/http"
 	"strconv"
 
@@ -9,15 +10,24 @@ import (
 )
 
 func createMerchant(c *gin.Context) {
+	logger := c.MustGet("logger").(*slog.Logger)
 	var m dtos.CreateMerchantDTO
 	if err := c.ShouldBindBodyWithJSON(&m); err != nil {
 		dtos.Fail(c, http.StatusBadRequest, "E001", err.Error())
 		return
 	}
-	if err := CreateMerchant(m); err != nil {
+	res, err := CreateMerchant(m)
+	if err != nil {
 		dtos.Fail(c, http.StatusInternalServerError, "E002", "failed to create product")
 	}
 
+	logger.Info("create transaction",
+		slog.Uint64("log_id", uint64(res.ID)),
+		slog.String("action", "CREATE_MERCHANT"),
+		slog.Float64("actor", 1),
+		slog.Uint64("resource_id", uint64(res.ID)),
+		slog.Time("timestamp", res.CreatedAt),
+	)
 	dtos.OK(c, gin.H{"message": "Commerce created"})
 }
 
