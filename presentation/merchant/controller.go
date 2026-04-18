@@ -19,6 +19,7 @@ func createMerchant(c *gin.Context) {
 	res, err := CreateMerchant(m)
 	if err != nil {
 		dtos.Fail(c, http.StatusInternalServerError, "E002", "failed to create product")
+		return
 	}
 
 	logger.Info("create merchant",
@@ -41,6 +42,7 @@ func getMerchantById(c *gin.Context) {
 	merchant, err := GetMerchantById(uint(intId))
 	if err != nil {
 		dtos.Fail(c, http.StatusBadRequest, "E004", "Merchant id not found")
+		return
 	}
 	dtos.OK(c, merchant)
 }
@@ -56,18 +58,38 @@ func updateMerchant(c *gin.Context) {
 	}
 	res, err := UpdateMerchant(uint(intId), m)
 	if err != nil {
-		dtos.Fail(c, http.StatusInternalServerError, "E002", "failed to create product")
+		dtos.Fail(c, http.StatusInternalServerError, "E006", "failed to create product")
+		return
 	}
 	logger.Info("update merchant",
 		slog.Uint64("log_id", uint64(res.ID)),
 		slog.String("action", "UPDATE_MERCHANT"),
 		slog.Float64("actor", 1),
 		slog.Uint64("resource_id", uint64(res.ID)),
-		slog.Time("timestamp", res.CreatedAt),
+		slog.Time("timestamp", res.UpdatedAt),
 	)
 	dtos.OK(c, res)
 }
 
 func deleteMerchant(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"message": "Commerce deleted"})
+	id := c.Param("id")
+	intId, err := strconv.ParseUint(id, 10, 32)
+	if err != nil {
+		dtos.Fail(c, http.StatusBadRequest, "E007", "Merchant id not valid")
+		return
+	}
+	merchant, err := DeactivateMerchant(uint(intId))
+	logger := c.MustGet("logger").(*slog.Logger)
+	if err != nil {
+		dtos.Fail(c, http.StatusBadRequest, "E008", "Merchant id not found")
+		return
+	}
+	logger.Info("update merchant",
+		slog.Uint64("log_id", intId),
+		slog.String("action", "DELETE_MERCHANT"),
+		slog.Float64("actor", 1),
+		slog.Uint64("resource_id", uint64(merchant.ID)),
+		slog.Time("timestamp", merchant.DeletedAt.Time),
+	)
+	dtos.OK(c, nil)
 }

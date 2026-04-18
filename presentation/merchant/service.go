@@ -38,3 +38,14 @@ func UpdateMerchant(id uint, merchantDTO dtos.UpdateMerchantDTO) (*entities.Merc
 
 	return merchant, nil
 }
+
+func DeactivateMerchant(id uint) (*entities.Merchant, error) {
+	merchant, err := GetMerchantById(id)
+	if err != nil {
+		return nil, err
+	}
+
+	config.DB.Delete(merchant)
+
+	return merchant, nil
+}
