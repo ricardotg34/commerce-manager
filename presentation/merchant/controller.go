@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func createMerchant(c *gin.Context) {
@@ -23,7 +24,7 @@ func createMerchant(c *gin.Context) {
 	}
 
 	logger.Info("create merchant",
-		slog.Uint64("log_id", uint64(res.ID)),
+		slog.String("log_id", uuid.New().String()),
 		slog.String("action", "CREATE_MERCHANT"),
 		slog.Float64("actor", 1),
 		slog.Uint64("resource_id", uint64(res.ID)),
@@ -62,7 +63,7 @@ func updateMerchant(c *gin.Context) {
 		return
 	}
 	logger.Info("update merchant",
-		slog.Uint64("log_id", uint64(res.ID)),
+		slog.String("log_id", uuid.New().String()),
 		slog.String("action", "UPDATE_MERCHANT"),
 		slog.Float64("actor", 1),
 		slog.Uint64("resource_id", uint64(res.ID)),
@@ -85,7 +86,7 @@ func deleteMerchant(c *gin.Context) {
 		return
 	}
 	logger.Info("update merchant",
-		slog.Uint64("log_id", intId),
+		slog.String("log_id", uuid.New().String()),
 		slog.String("action", "DELETE_MERCHANT"),
 		slog.Float64("actor", 1),
 		slog.Uint64("resource_id", uint64(merchant.ID)),

@@ -4,8 +4,6 @@ import (
 	"commerce-manager/config"
 	"commerce-manager/domain/dtos"
 	"commerce-manager/domain/entities"
-
-	_ "gorm.io/driver/postgres"
 )
 
 func CreateMerchant(merchantDTO dtos.CreateMerchantDTO) (*entities.Merchant, error) {
@@ -13,6 +11,7 @@ func CreateMerchant(merchantDTO dtos.CreateMerchantDTO) (*entities.Merchant, err
 		Name:      merchantDTO.Name,
 		Commision: merchantDTO.Commision,
 	}
+
 	if err := config.DB.Create(&merchant).Error; err != nil {
 		return nil, err
 	}
