@@ -21,7 +21,7 @@ func createMerchant(c *gin.Context) {
 		dtos.Fail(c, http.StatusInternalServerError, "E002", "failed to create product")
 	}
 
-	logger.Info("create transaction",
+	logger.Info("create merchant",
 		slog.Uint64("log_id", uint64(res.ID)),
 		slog.String("action", "CREATE_MERCHANT"),
 		slog.Float64("actor", 1),
@@ -46,7 +46,26 @@ func getMerchantById(c *gin.Context) {
 }
 
 func updateMerchant(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"message": "Commerce updated"})
+	logger := c.MustGet("logger").(*slog.Logger)
+	id := c.Param("id")
+	intId, err := strconv.ParseUint(id, 10, 32)
+	var m dtos.UpdateMerchantDTO
+	if err := c.ShouldBindBodyWithJSON(&m); err != nil {
+		dtos.Fail(c, http.StatusBadRequest, "E005", err.Error())
+		return
+	}
+	res, err := UpdateMerchant(uint(intId), m)
+	if err != nil {
+		dtos.Fail(c, http.StatusInternalServerError, "E002", "failed to create product")
+	}
+	logger.Info("update merchant",
+		slog.Uint64("log_id", uint64(res.ID)),
+		slog.String("action", "UPDATE_MERCHANT"),
+		slog.Float64("actor", 1),
+		slog.Uint64("resource_id", uint64(res.ID)),
+		slog.Time("timestamp", res.CreatedAt),
+	)
+	dtos.OK(c, res)
 }
 
 func deleteMerchant(c *gin.Context) {

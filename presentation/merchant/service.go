@@ -8,19 +8,33 @@ import (
 	_ "gorm.io/driver/postgres"
 )
 
-func CreateMerchant(merchantDTO dtos.CreateMerchantDTO) error {
+func CreateMerchant(merchantDTO dtos.CreateMerchantDTO) (*entities.Merchant, error) {
 	var merchant = entities.Merchant{
 		Name:      merchantDTO.Name,
 		Commision: merchantDTO.Commision,
 	}
 	if err := config.DB.Create(&merchant).Error; err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return &merchant, nil
 }
 
-func GetMerchantById(id uint) (entities.Merchant, error) {
+func GetMerchantById(id uint) (*entities.Merchant, error) {
 	var merchant entities.Merchant
 	result := config.DB.First(&merchant, id)
-	return merchant, result.Error
+	return &merchant, result.Error
+}
+
+func UpdateMerchant(id uint, merchantDTO dtos.UpdateMerchantDTO) (*entities.Merchant, error) {
+	merchant, err := GetMerchantById(id)
+	if err != nil {
+		return nil, err
+	}
+
+	config.DB.Model(merchant).Updates(entities.Merchant{
+		Name:      merchantDTO.Name,
+		Commision: merchantDTO.Commision,
+	})
+
+	return merchant, nil
 }
