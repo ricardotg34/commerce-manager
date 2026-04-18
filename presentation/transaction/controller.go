@@ -8,6 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// createTransaction godoc
+//
+// @Summary		Create Transaction
+// @Description	This endpoint receives a transaction from the request body and adds it to the database
+// @Accept			json
+// @Produce		json
+// @Param		body	body		dtos.TransactionDTO		true	"Request body"
+// @Success		200		{object}	dtos.Response{data=entities.Transaction}
+// @Router			/transaction [post]
 func createTransaction(c *gin.Context) {
 	logger := c.MustGet("logger").(*slog.Logger)
 

@@ -1,9 +1,7 @@
 package entities
 
-import "gorm.io/gorm"
-
 type Transaction struct {
-	gorm.Model
+	Model
 	Ammount    uint64
 	Fee        float32
 	UserID     uint

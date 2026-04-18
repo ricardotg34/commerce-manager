@@ -10,6 +10,15 @@ import (
 	"github.com/google/uuid"
 )
 
+// createMerchant godoc
+//
+// @Summary		Create Merchant
+// @Description	This endpoint creates a new merchant
+// @Accept		json
+// @Produce		json
+// @Param		body	body		dtos.CreateMerchantDTO		true	"Request body"
+// @Success		200		{object}	dtos.Response{data=entities.Merchant}
+// @Router			/merchant [post]
 func createMerchant(c *gin.Context) {
 	logger := c.MustGet("logger").(*slog.Logger)
 	var m dtos.CreateMerchantDTO
@@ -30,9 +39,18 @@ func createMerchant(c *gin.Context) {
 		slog.Uint64("resource_id", uint64(res.ID)),
 		slog.Time("timestamp", res.CreatedAt),
 	)
-	dtos.OK(c, gin.H{"message": "Commerce created"})
+	dtos.OK(c, res)
 }
 
+// getMerchantById godoc
+//
+// @Summary		Get Merchant
+// @Description	This endpoint retreives a merchant by its id
+// @Accept		json
+// @Produce		json
+// @Param		id	path	integer	true	"merchant id"
+// @Success		200		{object}	dtos.Response{data=entities.Merchant}
+// @Router			/merchant/{id} [get]
 func getMerchantById(c *gin.Context) {
 	id := c.Param("id")
 	intId, err := strconv.ParseUint(id, 10, 32)
@@ -48,6 +66,16 @@ func getMerchantById(c *gin.Context) {
 	dtos.OK(c, merchant)
 }
 
+// updateMerchant godoc
+//
+// @Summary		Update Merchant
+// @Description	This endpoint updates either name and/or commision from a merchant
+// @Accept		json
+// @Produce		json
+// @Param		body	body		dtos.UpdateMerchantDTO		true	"Request body"
+// @Param		id	path	integer	true	"merchant id"
+// @Success		200		{object}	dtos.Response{data=entities.Merchant}
+// @Router			/merchant{id} [patch]
 func updateMerchant(c *gin.Context) {
 	logger := c.MustGet("logger").(*slog.Logger)
 	id := c.Param("id")
@@ -72,6 +100,15 @@ func updateMerchant(c *gin.Context) {
 	dtos.OK(c, res)
 }
 
+// deleteMerchant godoc
+//
+// @Summary		Delete Merchant
+// @Description	This endpoint deletes a merchant from the system (Soft delete)
+// @Accept		json
+// @Produce		json
+// @Param		id	path	integer	true	"merchant id"
+// @Success		200		{object}	dtos.Response
+// @Router			/merchant{id} [delete]
 func deleteMerchant(c *gin.Context) {
 	id := c.Param("id")
 	intId, err := strconv.ParseUint(id, 10, 32)

@@ -1,0 +1,234 @@
+definitions:
+  dtos.CreateMerchantDTO:
+    properties:
+      commision:
+        maximum: 100
+        minimum: 0
+        type: number
+      name:
+        type: string
+    required:
+    - commision
+    - name
+    type: object
+  dtos.ErrorInfo:
+    properties:
+      code:
+        example: "404"
+        type: string
+      message:
+        type: string
+    type: object
+  dtos.Meta:
+    properties:
+      page:
+        type: integer
+      per_page:
+        type: integer
+      total:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  dtos.Response:
+    properties:
+      data: {}
+      error:
+        $ref: '#/definitions/dtos.ErrorInfo'
+      meta:
+        $ref: '#/definitions/dtos.Meta'
+      success:
+        example: true
+        type: boolean
+    type: object
+  dtos.TransactionDTO:
+    properties:
+      amount:
+        example: 1000
+        minimum: 0
+        type: number
+      merchantID:
+        example: 1
+        type: integer
+      userID:
+        example: 1
+        type: integer
+    required:
+    - amount
+    - merchantID
+    - userID
+    type: object
+  dtos.UpdateMerchantDTO:
+    properties:
+      commision:
+        maximum: 100
+        minimum: 0
+        type: number
+      name:
+        type: string
+    type: object
+  entities.Merchant:
+    properties:
+      commision:
+        example: 2.5
+        type: number
+      createdAt:
+        type: string
+      id:
+        type: integer
+      name:
+        example: walmart
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  entities.Transaction:
+    properties:
+      ammount:
+        format: int64
+        type: integer
+      createdAt:
+        type: string
+      fee:
+        format: float32
+        type: number
+      id:
+        type: integer
+      merchantID:
+        type: integer
+      updatedAt:
+        type: string
+      userID:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API that manages merchants and its transactions.
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /merchant:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint creates a new merchant
+      parameters:
+      - description: Request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateMerchantDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entities.Merchant'
+              type: object
+      summary: Create Merchant
+  /merchant/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint retreives a merchant by its id
+      parameters:
+      - description: merchant id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entities.Merchant'
+              type: object
+      summary: Get Merchant
+  /merchant{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This endpoint deletes a merchant from the system (Soft delete)
+      parameters:
+      - description: merchant id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.Response'
+      summary: Delete Merchant
+    patch:
+      consumes:
+      - application/json
+      description: This endpoint updates either name and/or commision from a merchant
+      parameters:
+      - description: Request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateMerchantDTO'
+      - description: merchant id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entities.Merchant'
+              type: object
+      summary: Update Merchant
+  /transaction:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint receives a transaction from the request body and
+        adds it to the database
+      parameters:
+      - description: Request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.TransactionDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entities.Transaction'
+              type: object
+      summary: Create Transaction
+swagger: "2.0"

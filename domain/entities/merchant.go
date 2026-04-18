@@ -1,10 +1,8 @@
 package entities
 
-import "gorm.io/gorm"
-
 type Merchant struct {
-	gorm.Model
-	Name         string
-	Commision    float32
-	Transactions []Transaction
+	Model
+	Name         string        `json:"name" example:"walmart"`
+	Commision    float32       `json:"commision" example:"2.5"`
+	Transactions []Transaction `json:"-"`
 }

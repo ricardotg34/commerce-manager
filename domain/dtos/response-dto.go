@@ -7,15 +7,15 @@ import (
 )
 
 type Response struct {
-	Success bool        `json:"success"`
-	Data    interface{} `json:"data,omitempty"`
-	Error   *ErrorInfo  `json:"error,omitempty"`
-	Meta    *Meta       `json:"meta,omitempty"`
+	Success bool       `json:"success" example:"true"`
+	Data    any        `json:"data,omitempty"`
+	Error   *ErrorInfo `json:"error,omitempty"`
+	Meta    *Meta      `json:"meta,omitempty"`
 }
 
 type ErrorInfo struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
+	Code    string `json:"code" example:"404"`
+	Message string `json:"message" example: "not found"`
 }
 
 type Meta struct {

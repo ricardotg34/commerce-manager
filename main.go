@@ -2,6 +2,7 @@ package main
 
 import (
 	"commerce-manager/config"
+	_ "commerce-manager/docs"
 	"commerce-manager/presentation"
 	"commerce-manager/presentation/middlewares"
 	"database/sql"
@@ -11,8 +12,14 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"     // swagger embed files
+	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 )
 
+// @title			Swagger Example API
+// @version		1.0
+// @description	API that manages merchants and its transactions.
+// @host		localhost:8080
 type App struct {
 	DB     *sql.DB
 	Logger *slog.Logger
@@ -38,6 +45,7 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(io.MultiWriter(file, os.Stdout), nil))
 
 	server.Use(middlewares.LoggerMiddleware(logger))
+	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	server.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
@@ -46,5 +54,5 @@ func main() {
 
 	presentation.RegisterRoutes(server)
 
-	server.Run() // listens on 0.0.0.0:8080 by default
+	server.Run()
 }
