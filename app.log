@@ -1,10 +1,5 @@
-{"time":"2026-04-18T00:32:50.147613-06:00","level":"INFO","msg":"create transaction","log_id":7,"action":"CREATE_TRANSACTION","actor":1,"resource_id":7,"timestamp":"2026-04-18T00:32:50.144686-06:00"}
-{"time":"2026-04-18T00:33:11.93563-06:00","level":"INFO","msg":"create transaction","log_id":8,"action":"CREATE_TRANSACTION","actor":1,"resource_id":8,"timestamp":"2026-04-18T00:33:11.933505-06:00"}
-{"time":"2026-04-18T00:34:28.846454-06:00","level":"INFO","msg":"create transaction","log_id":9,"action":"CREATE_TRANSACTION","actor":1,"resource_id":9,"timestamp":"2026-04-18T00:34:28.842526-06:00"}
-{"time":"2026-04-18T01:24:03.780654-06:00","level":"INFO","msg":"update merchant","log_id":1,"action":"UPDATE_MERCHANT","actor":1,"resource_id":1,"timestamp":"2026-04-17T01:18:13.860817-06:00"}
-{"time":"2026-04-18T01:24:31.697091-06:00","level":"INFO","msg":"update merchant","log_id":1,"action":"UPDATE_MERCHANT","actor":1,"resource_id":1,"timestamp":"2026-04-17T01:18:13.860817-06:00"}
-{"time":"2026-04-18T01:28:44.868415-06:00","level":"INFO","msg":"update merchant","log_id":1,"action":"UPDATE_MERCHANT","actor":1,"resource_id":1,"timestamp":"2026-04-17T01:18:13.860817-06:00"}
-{"time":"2026-04-18T01:28:53.649522-06:00","level":"INFO","msg":"update merchant","log_id":1,"action":"UPDATE_MERCHANT","actor":1,"resource_id":1,"timestamp":"2026-04-17T01:18:13.860817-06:00"}
-{"time":"2026-04-18T01:29:06.363288-06:00","level":"INFO","msg":"update merchant","log_id":1,"action":"UPDATE_MERCHANT","actor":1,"resource_id":1,"timestamp":"2026-04-17T01:18:13.860817-06:00"}
-{"time":"2026-04-18T01:29:11.630373-06:00","level":"INFO","msg":"update merchant","log_id":1,"action":"UPDATE_MERCHANT","actor":1,"resource_id":1,"timestamp":"2026-04-17T01:18:13.860817-06:00"}
-{"time":"2026-04-18T01:29:27.665587-06:00","level":"INFO","msg":"update merchant","log_id":1,"action":"UPDATE_MERCHANT","actor":1,"resource_id":1,"timestamp":"2026-04-17T01:18:13.860817-06:00"}
+{"time":"2026-04-18T14:26:12.195962-06:00","level":"INFO","msg":"create merchant","log_id":"3f14c87d-26bf-48d6-9731-3b239b2569cd","action":"CREATE_MERCHANT","actor":1,"resource_id":1,"timestamp":"2026-04-18T14:26:12.187687-06:00"}
+{"time":"2026-04-18T14:26:43.143572-06:00","level":"INFO","msg":"create transaction","log_id":1,"action":"CREATE_TRANSACTION","actor":1,"resource_id":1,"timestamp":"2026-04-18T14:26:43.141503-06:00"}
+{"time":"2026-04-18T14:46:03.182168-06:00","level":"INFO","msg":"create transaction","log_id":2,"action":"CREATE_TRANSACTION","actor":1,"resource_id":2,"timestamp":"2026-04-18T14:46:03.178629-06:00"}
+{"time":"2026-04-18T15:38:12.138022-06:00","level":"INFO","msg":"create transaction","log_id":3,"action":"CREATE_TRANSACTION","actor":1,"resource_id":3,"timestamp":"2026-04-18T15:38:12.134526-06:00"}
+{"time":"2026-04-18T15:38:26.72083-06:00","level":"INFO","msg":"create merchant","log_id":"2de24270-f497-4b44-81df-d1c69506d0c1","action":"CREATE_MERCHANT","actor":1,"resource_id":2,"timestamp":"2026-04-18T15:38:26.717818-06:00"}

@@ -1,0 +1,26 @@
+# Binarios
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+
+# Dependencias (si no usas vendor)
+vendor/
+
+# Archivos de entorno y secretos
+.env
+config.json
+secret.key
+app.log
+
+# Logs y bases de datos
+*.log
+*.db
+*.sqlite
+
+# Archivos de la IDE
+.idea/
+.vscode/
+*.swp
