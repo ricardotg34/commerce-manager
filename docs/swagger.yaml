@@ -11,12 +11,20 @@ definitions:
     - commision
     - name
     type: object
+  dtos.CreateUserDTO:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
   dtos.ErrorInfo:
     properties:
       code:
         example: "404"
         type: string
       message:
+        example: not found
         type: string
     type: object
   dtos.Meta:
@@ -58,6 +66,27 @@ definitions:
     - merchantID
     - userID
     type: object
+  dtos.TransactionResponseDataDTO:
+    properties:
+      amount:
+        example: 1000
+        type: number
+      commision:
+        example: 5.5
+        type: number
+      createdAt:
+        example: "2026-01-01T00:00:00-06:00"
+        type: string
+      fee:
+        example: 55
+        type: number
+      merchantID:
+        example: 1
+        type: integer
+      transactionID:
+        example: 1
+        type: integer
+    type: object
   dtos.UpdateMerchantDTO:
     properties:
       commision:
@@ -82,24 +111,14 @@ definitions:
       updatedAt:
         type: string
     type: object
-  entities.Transaction:
+  entities.User:
     properties:
-      ammount:
-        format: int64
-        type: integer
-      createdAt:
-        type: string
-      fee:
-        format: float32
-        type: number
       id:
+        example: 1
         type: integer
-      merchantID:
-        type: integer
-      updatedAt:
+      name:
+        example: Ricardo
         type: string
-      userID:
-        type: integer
     type: object
 host: localhost:8080
 info:
@@ -133,7 +152,29 @@ paths:
                   $ref: '#/definitions/entities.Merchant'
               type: object
       summary: Create Merchant
+      tags:
+      - merchant
   /merchant/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This endpoint deletes a merchant from the system (Soft delete)
+      parameters:
+      - description: merchant id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.Response'
+      summary: Delete Merchant
+      tags:
+      - merchant
     get:
       consumes:
       - application/json
@@ -157,25 +198,8 @@ paths:
                   $ref: '#/definitions/entities.Merchant'
               type: object
       summary: Get Merchant
-  /merchant{id}:
-    delete:
-      consumes:
-      - application/json
-      description: This endpoint deletes a merchant from the system (Soft delete)
-      parameters:
-      - description: merchant id
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dtos.Response'
-      summary: Delete Merchant
+      tags:
+      - merchant
     patch:
       consumes:
       - application/json
@@ -205,6 +229,8 @@ paths:
                   $ref: '#/definitions/entities.Merchant'
               type: object
       summary: Update Merchant
+      tags:
+      - merchant
   /transaction:
     post:
       consumes:
@@ -228,7 +254,64 @@ paths:
             - $ref: '#/definitions/dtos.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/entities.Transaction'
+                  $ref: '#/definitions/dtos.TransactionResponseDataDTO'
+                error:
+                  type: object
               type: object
       summary: Create Transaction
+      tags:
+      - transactions
+  /user:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint creates a new user
+      parameters:
+      - description: Request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateUserDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entities.User'
+              type: object
+      summary: Create User
+      tags:
+      - user
+  /user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint retreives a user by its id
+      parameters:
+      - description: User id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entities.User'
+              type: object
+      summary: Get User
+      tags:
+      - user
 swagger: "2.0"

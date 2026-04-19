@@ -15,7 +15,7 @@ type Response struct {
 
 type ErrorInfo struct {
 	Code    string `json:"code" example:"404"`
-	Message string `json:"message" example: "not found"`
+	Message string `json:"message" example:"not found"`
 }
 
 type Meta struct {

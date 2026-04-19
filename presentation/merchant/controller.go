@@ -13,6 +13,7 @@ import (
 // createMerchant godoc
 //
 // @Summary		Create Merchant
+// @Tags	merchant
 // @Description	This endpoint creates a new merchant
 // @Accept		json
 // @Produce		json
@@ -45,6 +46,7 @@ func createMerchant(c *gin.Context) {
 // getMerchantById godoc
 //
 // @Summary		Get Merchant
+// @Tags	merchant
 // @Description	This endpoint retreives a merchant by its id
 // @Accept		json
 // @Produce		json
@@ -69,13 +71,14 @@ func getMerchantById(c *gin.Context) {
 // updateMerchant godoc
 //
 // @Summary		Update Merchant
+// @Tags	merchant
 // @Description	This endpoint updates either name and/or commision from a merchant
 // @Accept		json
 // @Produce		json
 // @Param		body	body		dtos.UpdateMerchantDTO		true	"Request body"
 // @Param		id	path	integer	true	"merchant id"
 // @Success		200		{object}	dtos.Response{data=entities.Merchant}
-// @Router			/merchant{id} [patch]
+// @Router			/merchant/{id} [patch]
 func updateMerchant(c *gin.Context) {
 	logger := c.MustGet("logger").(*slog.Logger)
 	id := c.Param("id")
@@ -103,12 +106,13 @@ func updateMerchant(c *gin.Context) {
 // deleteMerchant godoc
 //
 // @Summary		Delete Merchant
+// @Tags	merchant
 // @Description	This endpoint deletes a merchant from the system (Soft delete)
 // @Accept		json
 // @Produce		json
 // @Param		id	path	integer	true	"merchant id"
 // @Success		200		{object}	dtos.Response
-// @Router			/merchant{id} [delete]
+// @Router			/merchant/{id} [delete]
 func deleteMerchant(c *gin.Context) {
 	id := c.Param("id")
 	intId, err := strconv.ParseUint(id, 10, 32)

@@ -24,6 +24,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "merchant"
+                ],
                 "summary": "Create Merchant",
                 "parameters": [
                     {
@@ -67,6 +70,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "merchant"
+                ],
                 "summary": "Get Merchant",
                 "parameters": [
                     {
@@ -97,9 +103,7 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/merchant{id}": {
+            },
             "delete": {
                 "description": "This endpoint deletes a merchant from the system (Soft delete)",
                 "consumes": [
@@ -107,6 +111,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "merchant"
                 ],
                 "summary": "Delete Merchant",
                 "parameters": [
@@ -134,6 +141,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "merchant"
                 ],
                 "summary": "Update Merchant",
                 "parameters": [
@@ -185,6 +195,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "transactions"
+                ],
                 "summary": "Create Transaction",
                 "parameters": [
                     {
@@ -209,7 +222,100 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/entities.Transaction"
+                                            "$ref": "#/definitions/dtos.TransactionResponseDataDTO"
+                                        },
+                                        "error": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "post": {
+                "description": "This endpoint creates a new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Create User",
+                "parameters": [
+                    {
+                        "description": "Request body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CreateUserDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/dtos.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/entities.User"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "description": "This endpoint retreives a user by its id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get User",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/dtos.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/entities.User"
                                         }
                                     }
                                 }
@@ -238,6 +344,17 @@ const docTemplate = `{
                 }
             }
         },
+        "dtos.CreateUserDTO": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "dtos.ErrorInfo": {
             "type": "object",
             "properties": {
@@ -246,7 +363,8 @@ const docTemplate = `{
                     "example": "404"
                 },
                 "message": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "not found"
                 }
             }
         },
@@ -306,6 +424,35 @@ const docTemplate = `{
                 }
             }
         },
+        "dtos.TransactionResponseDataDTO": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number",
+                    "example": 1000
+                },
+                "commision": {
+                    "type": "number",
+                    "example": 5.5
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2026-01-01T00:00:00-06:00"
+                },
+                "fee": {
+                    "type": "number",
+                    "example": 55
+                },
+                "merchantID": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "transactionID": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
         "dtos.UpdateMerchantDTO": {
             "type": "object",
             "properties": {
@@ -341,31 +488,16 @@ const docTemplate = `{
                 }
             }
         },
-        "entities.Transaction": {
+        "entities.User": {
             "type": "object",
             "properties": {
-                "ammount": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "createdAt": {
-                    "type": "string"
-                },
-                "fee": {
-                    "type": "number",
-                    "format": "float32"
-                },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
-                "merchantID": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "type": "string"
-                },
-                "userID": {
-                    "type": "integer"
+                "name": {
+                    "type": "string",
+                    "example": "Ricardo"
                 }
             }
         }
