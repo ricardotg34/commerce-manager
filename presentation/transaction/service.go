@@ -24,11 +24,11 @@ func ProcessTransaction(transactionDTO dtos.TransactionDTO) (*dtos.TransactionRe
 		return nil, errors.New("Merchant not found")
 	}
 
-	fee := transactionDTO.Amount * merchantO.Commision
+	var fee = math.Round(transactionDTO.Amount * merchantO.Commision)
 
 	var transaction = entities.Transaction{
 		Ammount:    uint64(transactionDTO.Amount * 100),
-		Fee:        fee,
+		Fee:        uint64(fee),
 		UserID:     userO.ID,
 		MerchantID: merchantO.ID,
 	}
@@ -40,7 +40,7 @@ func ProcessTransaction(transactionDTO dtos.TransactionDTO) (*dtos.TransactionRe
 		MerchantID:    transaction.MerchantID,
 		Amount:        transactionDTO.Amount,
 		Commision:     merchantO.Commision,
-		Fee:           math.Round(float64(fee)) / 100,
+		Fee:           math.Round(fee) / 100,
 		CreatedAt:     transaction.CreatedAt,
 	}, nil
 }
