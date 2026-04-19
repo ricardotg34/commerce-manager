@@ -48,7 +48,6 @@ func createMerchant(c *gin.Context) {
 // @Summary		Get Merchant
 // @Tags	merchant
 // @Description	This endpoint retreives a merchant by its id
-// @Accept		json
 // @Produce		json
 // @Param		id	path	integer	true	"merchant id"
 // @Success		200		{object}	dtos.Response{data=entities.Merchant}
