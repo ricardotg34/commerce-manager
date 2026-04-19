@@ -6,11 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Response struct {
+type SuccessResponse struct {
+	Success bool `json:"success" example:"true"`
+	Data    any  `json:"data,omitempty"`
+}
+
+type FailResponse struct {
 	Success bool       `json:"success" example:"true"`
-	Data    any        `json:"data,omitempty"`
 	Error   *ErrorInfo `json:"error,omitempty"`
-	Meta    *Meta      `json:"meta,omitempty"`
 }
 
 type ErrorInfo struct {
@@ -18,16 +21,9 @@ type ErrorInfo struct {
 	Message string `json:"message" example:"not found"`
 }
 
-type Meta struct {
-	Page       int `json:"page,omitempty"`
-	PerPage    int `json:"per_page,omitempty"`
-	Total      int `json:"total,omitempty"`
-	TotalPages int `json:"total_pages,omitempty"`
-}
-
 // OK sends a success response.
-func OK(c *gin.Context, data interface{}) {
-	c.JSON(http.StatusOK, Response{
+func OK(c *gin.Context, data any) {
+	c.JSON(http.StatusOK, SuccessResponse{
 		Success: true,
 		Data:    data,
 	})
@@ -35,7 +31,7 @@ func OK(c *gin.Context, data interface{}) {
 
 // Fail sends an error response.
 func Fail(c *gin.Context, status int, code, message string) {
-	c.JSON(status, Response{
+	c.JSON(status, FailResponse{
 		Success: false,
 		Error:   &ErrorInfo{Code: code, Message: message},
 	})

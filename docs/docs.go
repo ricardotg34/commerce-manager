@@ -45,7 +45,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dtos.Response"
+                                    "$ref": "#/definitions/dtos.SuccessResponse"
                                 },
                                 {
                                     "type": "object",
@@ -86,7 +86,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dtos.Response"
+                                    "$ref": "#/definitions/dtos.SuccessResponse"
                                 },
                                 {
                                     "type": "object",
@@ -126,7 +126,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dtos.Response"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/dtos.SuccessResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -167,7 +179,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dtos.Response"
+                                    "$ref": "#/definitions/dtos.SuccessResponse"
                                 },
                                 {
                                     "type": "object",
@@ -213,7 +225,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dtos.Response"
+                                    "$ref": "#/definitions/dtos.SuccessResponse"
                                 },
                                 {
                                     "type": "object",
@@ -248,7 +260,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dtos.Response"
+                                    "$ref": "#/definitions/dtos.SuccessResponse"
                                 },
                                 {
                                     "type": "object",
@@ -294,7 +306,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dtos.Response"
+                                    "$ref": "#/definitions/dtos.SuccessResponse"
                                 },
                                 {
                                     "type": "object",
@@ -338,7 +350,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dtos.Response"
+                                    "$ref": "#/definitions/dtos.SuccessResponse"
                                 },
                                 {
                                     "type": "object",
@@ -384,19 +396,6 @@ const docTemplate = `{
                 }
             }
         },
-        "dtos.ErrorInfo": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string",
-                    "example": "404"
-                },
-                "message": {
-                    "type": "string",
-                    "example": "not found"
-                }
-            }
-        },
         "dtos.MerchantCommisions": {
             "type": "object",
             "properties": {
@@ -405,23 +404,6 @@ const docTemplate = `{
                 },
                 "total": {
                     "type": "number"
-                }
-            }
-        },
-        "dtos.Meta": {
-            "type": "object",
-            "properties": {
-                "page": {
-                    "type": "integer"
-                },
-                "per_page": {
-                    "type": "integer"
-                },
-                "total": {
-                    "type": "integer"
-                },
-                "total_pages": {
-                    "type": "integer"
                 }
             }
         },
@@ -439,16 +421,10 @@ const docTemplate = `{
                 }
             }
         },
-        "dtos.Response": {
+        "dtos.SuccessResponse": {
             "type": "object",
             "properties": {
                 "data": {},
-                "error": {
-                    "$ref": "#/definitions/dtos.ErrorInfo"
-                },
-                "meta": {
-                    "$ref": "#/definitions/dtos.Meta"
-                },
                 "success": {
                     "type": "boolean",
                     "example": true

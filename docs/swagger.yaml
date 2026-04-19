@@ -18,32 +18,12 @@ definitions:
     required:
     - name
     type: object
-  dtos.ErrorInfo:
-    properties:
-      code:
-        example: "404"
-        type: string
-      message:
-        example: not found
-        type: string
-    type: object
   dtos.MerchantCommisions:
     properties:
       name:
         type: string
       total:
         type: number
-    type: object
-  dtos.Meta:
-    properties:
-      page:
-        type: integer
-      per_page:
-        type: integer
-      total:
-        type: integer
-      total_pages:
-        type: integer
     type: object
   dtos.Report:
     properties:
@@ -54,13 +34,9 @@ definitions:
       total:
         type: number
     type: object
-  dtos.Response:
+  dtos.SuccessResponse:
     properties:
       data: {}
-      error:
-        $ref: '#/definitions/dtos.ErrorInfo'
-      meta:
-        $ref: '#/definitions/dtos.Meta'
       success:
         example: true
         type: boolean
@@ -162,7 +138,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dtos.Response'
+            - $ref: '#/definitions/dtos.SuccessResponse'
             - properties:
                 data:
                   $ref: '#/definitions/entities.Merchant'
@@ -187,7 +163,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dtos.Response'
+            allOf:
+            - $ref: '#/definitions/dtos.SuccessResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
       summary: Delete Merchant
       tags:
       - merchant
@@ -206,7 +187,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dtos.Response'
+            - $ref: '#/definitions/dtos.SuccessResponse'
             - properties:
                 data:
                   $ref: '#/definitions/entities.Merchant'
@@ -237,7 +218,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dtos.Response'
+            - $ref: '#/definitions/dtos.SuccessResponse'
             - properties:
                 data:
                   $ref: '#/definitions/entities.Merchant'
@@ -265,7 +246,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dtos.Response'
+            - $ref: '#/definitions/dtos.SuccessResponse'
             - properties:
                 data:
                   $ref: '#/definitions/dtos.TransactionResponseDataDTO'
@@ -286,7 +267,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dtos.Response'
+            - $ref: '#/definitions/dtos.SuccessResponse'
             - properties:
                 data:
                   $ref: '#/definitions/dtos.Report'
@@ -313,7 +294,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dtos.Response'
+            - $ref: '#/definitions/dtos.SuccessResponse'
             - properties:
                 data:
                   $ref: '#/definitions/entities.User'
@@ -339,7 +320,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dtos.Response'
+            - $ref: '#/definitions/dtos.SuccessResponse'
             - properties:
                 data:
                   $ref: '#/definitions/entities.User'

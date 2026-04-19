@@ -18,7 +18,7 @@ import (
 // @Accept		json
 // @Produce		json
 // @Param		body	body		dtos.CreateMerchantDTO		true	"Request body"
-// @Success		200		{object}	dtos.Response{data=entities.Merchant}
+// @Success		200		{object}	dtos.SuccessResponse{data=entities.Merchant}
 // @Router			/merchant [post]
 func createMerchant(c *gin.Context) {
 	logger := c.MustGet("logger").(*slog.Logger)
@@ -50,7 +50,7 @@ func createMerchant(c *gin.Context) {
 // @Description	This endpoint retreives a merchant by its id
 // @Produce		json
 // @Param		id	path	integer	true	"merchant id"
-// @Success		200		{object}	dtos.Response{data=entities.Merchant}
+// @Success		200		{object}	dtos.SuccessResponse{data=entities.Merchant}
 // @Router			/merchant/{id} [get]
 func getMerchantById(c *gin.Context) {
 	id := c.Param("id")
@@ -76,7 +76,7 @@ func getMerchantById(c *gin.Context) {
 // @Produce		json
 // @Param		body	body		dtos.UpdateMerchantDTO		true	"Request body"
 // @Param		id	path	integer	true	"merchant id"
-// @Success		200		{object}	dtos.Response{data=entities.Merchant}
+// @Success		200		{object}	dtos.SuccessResponse{data=entities.Merchant}
 // @Router			/merchant/{id} [patch]
 func updateMerchant(c *gin.Context) {
 	logger := c.MustGet("logger").(*slog.Logger)
@@ -110,7 +110,7 @@ func updateMerchant(c *gin.Context) {
 // @Accept		json
 // @Produce		json
 // @Param		id	path	integer	true	"merchant id"
-// @Success		200		{object}	dtos.Response
+// @Success		200		{object}	dtos.SuccessResponse{data=nil}
 // @Router			/merchant/{id} [delete]
 func deleteMerchant(c *gin.Context) {
 	id := c.Param("id")

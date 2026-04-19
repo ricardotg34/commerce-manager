@@ -16,7 +16,7 @@ import (
 // @Accept		json
 // @Produce		json
 // @Param		body	body		dtos.CreateUserDTO		true	"Request body"
-// @Success		200		{object}	dtos.Response{data=entities.User}
+// @Success		200		{object}	dtos.SuccessResponse{data=entities.User}
 // @Router			/user [post]
 func postUser(c *gin.Context) {
 	var u dtos.CreateUserDTO
@@ -40,7 +40,7 @@ func postUser(c *gin.Context) {
 // @Accept		json
 // @Produce		json
 // @Param		id	path	integer	true	"User id"
-// @Success		200		{object}	dtos.Response{data=entities.User}
+// @Success		200		{object}	dtos.SuccessResponse{data=entities.User}
 // @Router			/user/{id} [get]
 func getUserById(c *gin.Context) {
 	id := c.Param("id")
